@@ -1437,6 +1437,39 @@ void moveCharactersToBottom(int value) {
     glutPostRedisplay();
 
 }
+void startScene3() {
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+
+
+    glClear(GL_COLOR_BUFFER_BIT); // display background colour
+    glPointSize(10.0);
+    glLineWidth(10.0);
+    darkMonitor(0, 0, 1000, 600);
+
+    drawByte(byte_x, byte_y, 40, 150);  // Draw the character "Byte"
+    drawBit(bit_x, bit_y, 40, 150);  // Draw the character "Bit"
+    drawVirus(virus_x, virus_y);
+    // Start the timer to move the virus to the top left corner
+    glutTimerFunc(0, moveVirusToTopLeft, 0);
+
+    // Start the timer for continuous random movement
+    glutTimerFunc(3000, moveCharacters, 0);
+
+    // Start the timer to move the virus to the top right corner after 7 seconds
+    glutTimerFunc(7000, moveVirusToTopRight, 0);
+
+    // Start the timer to move characters to corners after 7 seconds
+    glutTimerFunc(7000, moveCharactersToCorners, 0);
+
+    // Start the timer to move the virus to the bottom right corner after 10 seconds
+    glutTimerFunc(10000, moveVirusToBottomRight, 0);
+
+    // Start the timer to move characters to the bottom after 10 seconds
+    glutTimerFunc(10000, moveCharactersToBottom, 0);
+
+    glutMainLoop();
+}
 
 //////////////////////////////////////// SCENE 4 ANIMATION //////////////////////////////////////////////
 // Function for Bit's jumping animation
@@ -1812,7 +1845,7 @@ void display() {
         displayBitsAndBytesTyping();
         break;
     }
-
+    startScene3();
     scene4(0);
 }
 //////////////////////////////////////// MAIN FUNCTION //////////////////////////////////////////////////
